@@ -450,7 +450,7 @@ void Vehicle::_commonInit(void)
     _addFact(&_hobbsFact,               _hobbsFactName);
 
     // James Adds
-    _addFact(&_rotorRpmFact,            _motorRpmFactName);
+    _addFact(&_rotorRpmFact,            _rotorRpmFactName);
     _addFact(&_motorRpmFact,            _motorRpmFactName);
 
     _addFactGroup(&_gpsFactGroup,               _gpsFactGroupName);

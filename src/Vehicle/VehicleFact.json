@@ -106,7 +106,7 @@
 	"shortDescription": "Rotor Rpm",
 	"type":				"double",
 	"decimalPlaces":	0
-}
+},
 {
 	"name":				"motorRpm",
 	"shortDescription": "Motor Rpm",
