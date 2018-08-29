@@ -72,21 +72,21 @@ LinuxBuild {
 }
 
 WindowsBuild {
-    RC_ICONS = resources/icons/qgroundcontrol.ico
+    RC_ICONS = resources/icons/bronbergLogo.ico
 }
 
 #
 # Branding
 #
 
-QGC_APP_NAME        = "QGroundControl"
+QGC_APP_NAME        = "B-1000 QgroundControl"
 QGC_ORG_NAME        = "QGroundControl.org"
 QGC_ORG_DOMAIN      = "org.qgroundcontrol"
-QGC_APP_DESCRIPTION = "Open source ground control app provided by QGroundControl dev team"
+QGC_APP_DESCRIPTION = "Bronberg Dynamics modified QGroundControl"
 QGC_APP_COPYRIGHT   = "Copyright (C) 2017 QGroundControl Development Team. All rights reserved."
 
 WindowsBuild {
-    QGC_INSTALLER_ICON          = "WindowsQGC.ico"
+    QGC_INSTALLER_ICON          = "bronbergLogo.ico"
     QGC_INSTALLER_HEADER_BITMAP = "installheader.bmp"
 }
 

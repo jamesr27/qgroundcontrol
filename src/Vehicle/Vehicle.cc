@@ -67,6 +67,9 @@ const char* Vehicle::_flightDistanceFactName =      "flightDistance";
 const char* Vehicle::_flightTimeFactName =          "flightTime";
 const char* Vehicle::_distanceToHomeFactName =      "distanceToHome";
 const char* Vehicle::_hobbsFactName =               "hobbs";
+// James adds rotor rpm and motor rpm
+const char* Vehicle::_rotorRpmFactName =            "rotorRpm";
+const char* Vehicle::_motorRpmFactName =            "motorRpm";
 
 const char* Vehicle::_gpsFactGroupName =            "gps";
 const char* Vehicle::_battery1FactGroupName =       "battery";
@@ -186,6 +189,9 @@ Vehicle::Vehicle(LinkInterface*             link,
     , _flightTimeFact       (0, _flightTimeFactName,        FactMetaData::valueTypeElapsedTimeInSeconds)
     , _distanceToHomeFact   (0, _distanceToHomeFactName,    FactMetaData::valueTypeDouble)
     , _hobbsFact            (0, _hobbsFactName,             FactMetaData::valueTypeString)
+    // James adds
+    , _rotorRpmFact         (0, _rotorRpmFactName,          FactMetaData::valueTypeDouble)
+    , _motorRpmFact         (0, _motorRpmFactName,          FactMetaData::valueTypeDouble)
     , _gpsFactGroup(this)
     , _battery1FactGroup(this)
     , _battery2FactGroup(this)
@@ -370,6 +376,9 @@ Vehicle::Vehicle(MAV_AUTOPILOT              firmwareType,
     , _flightTimeFact       (0, _flightTimeFactName,        FactMetaData::valueTypeElapsedTimeInSeconds)
     , _distanceToHomeFact   (0, _distanceToHomeFactName,    FactMetaData::valueTypeDouble)
     , _hobbsFact            (0, _hobbsFactName,             FactMetaData::valueTypeString)
+    // James adds
+    , _rotorRpmFact         (0, _rotorRpmFactName,          FactMetaData::valueTypeDouble)
+    , _motorRpmFact         (0, _motorRpmFactName,          FactMetaData::valueTypeDouble)
     , _gpsFactGroup(this)
     , _battery1FactGroup(this)
     , _battery2FactGroup(this)
@@ -437,9 +446,12 @@ void Vehicle::_commonInit(void)
     _addFact(&_flightDistanceFact,      _flightDistanceFactName);
     _addFact(&_flightTimeFact,          _flightTimeFactName);
     _addFact(&_distanceToHomeFact,      _distanceToHomeFactName);
-
     _hobbsFact.setRawValue(QVariant(QString("0000:00:00")));
     _addFact(&_hobbsFact,               _hobbsFactName);
+
+    // James Adds
+    _addFact(&_rotorRpmFact,            _motorRpmFactName);
+    _addFact(&_motorRpmFact,            _motorRpmFactName);
 
     _addFactGroup(&_gpsFactGroup,               _gpsFactGroupName);
     _addFactGroup(&_battery1FactGroup,          _battery1FactGroupName);
@@ -723,6 +735,12 @@ void Vehicle::_mavlinkMessageReceived(LinkInterface* link, mavlink_message_t mes
     case MAVLINK_MSG_ID_PING:
         _handlePing(link, message);
         break;
+
+    // James adds
+    case MAVLINK_MSG_ID_ROTORRPM:
+        _handleRotorRpm(message);
+        break;
+
 
     case MAVLINK_MSG_ID_SERIAL_CONTROL:
     {
@@ -1449,6 +1467,16 @@ void Vehicle::_handlePing(LinkInterface* link, mavlink_message_t& message)
                                message.sysid,
                                message.compid);
     sendMessageOnLink(link, msg);
+}
+
+// James Adds
+void Vehicle::_handleRotorRpm(mavlink_message_t& message)
+{
+    mavlink_rotorrpm_t rotorRpm;
+    mavlink_msg_rotorrpm_decode(&message,&rotorRpm);
+
+    _rotorRpmFact.setRawValue(qIsNaN(rotorRpm.rpm) ? 0 : rotorRpm.rpm);
+    _motorRpmFact.setRawValue(qIsNaN(rotorRpm.mrpm) ? 0 : rotorRpm.mrpm);
 }
 
 void Vehicle::_handleHeartbeat(mavlink_message_t& message)

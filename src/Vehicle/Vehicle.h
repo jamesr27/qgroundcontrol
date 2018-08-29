@@ -526,6 +526,10 @@ public:
     Q_PROPERTY(Fact* distanceToHome     READ distanceToHome     CONSTANT)
     Q_PROPERTY(Fact* hobbs              READ hobbs              CONSTANT)
 
+    // James adds
+    Q_PROPERTY(Fact* rotorRpm           READ rotorRpm           CONSTANT)
+    Q_PROPERTY(Fact* motorRpm           READ motorRpm           CONSTANT)
+
     Q_PROPERTY(FactGroup* gps         READ gpsFactGroup         CONSTANT)
     Q_PROPERTY(FactGroup* battery     READ battery1FactGroup    CONSTANT)
     Q_PROPERTY(FactGroup* battery2    READ battery2FactGroup    CONSTANT)
@@ -814,6 +818,10 @@ public:
     Fact* distanceToHome    (void) { return &_distanceToHomeFact; }
     Fact* hobbs             (void) { return &_hobbsFact; }
 
+    // James adds
+    Fact* rotorRpm          (void) { return &_rotorRpmFact; }
+    Fact* motorRpm          (void) { return &_motorRpmFact; }
+
     FactGroup* gpsFactGroup             (void) { return &_gpsFactGroup; }
     FactGroup* battery1FactGroup        (void) { return &_battery1FactGroup; }
     FactGroup* battery2FactGroup        (void) { return &_battery2FactGroup; }
@@ -1060,6 +1068,8 @@ private:
     void _saveSettings(void);
     void _startJoystick(bool start);
     void _handlePing(LinkInterface* link, mavlink_message_t& message);
+    // James adds
+    void _handleRotorRpm(mavlink_message_t& message);
     void _handleHomePosition(mavlink_message_t& message);
     void _handleHeartbeat(mavlink_message_t& message);
     void _handleRadioStatus(mavlink_message_t& message);
@@ -1294,6 +1304,9 @@ private:
     Fact _flightTimeFact;
     Fact _distanceToHomeFact;
     Fact _hobbsFact;
+    // James adds
+    Fact _rotorRpmFact;
+    Fact _motorRpmFact;
 
     VehicleGPSFactGroup             _gpsFactGroup;
     VehicleBatteryFactGroup         _battery1FactGroup;
@@ -1320,6 +1333,9 @@ private:
     static const char* _flightTimeFactName;
     static const char* _distanceToHomeFactName;
     static const char* _hobbsFactName;
+    // James adds
+    static const char* _rotorRpmFactName;
+    static const char* _motorRpmFactName;
 
     static const char* _gpsFactGroupName;
     static const char* _battery1FactGroupName;

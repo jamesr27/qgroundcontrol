@@ -100,5 +100,17 @@
     "name":             "hobbs",
     "shortDescription": "Hobbs Meter",
     "type":             "string"
+},
+{
+	"name":				"rotorRpm",
+	"shortDescription": "Rotor Rpm",
+	"type":				"double",
+	"decimalPlaces":	0
+}
+{
+	"name":				"motorRpm",
+	"shortDescription": "Motor Rpm",
+	"type":				"double",
+	"decimalPlaces":	0
 }
 ]
